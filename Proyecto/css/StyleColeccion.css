@@ -1,0 +1,258 @@
+
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+            background: #f5f5f5;
+        }
+        
+        .pokemon-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            width: 100%;
+            margin-bottom: 80px;
+        }
+        
+        .pokemon-cell {
+            background: white;
+            border-radius: 8px;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .pokemon-cell.obtenido {
+            background-color: #e8f5e9;
+            border: 2px solid #4caf50;
+        }
+        
+        .pokemon-cell img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            display: none;
+        }
+        
+        .pokemon-cell.obtenido img {
+            display: block;
+        }
+        
+        .pokemon-cell p {
+            font-size: 12px;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        
+        .pokemon-cell .placeholder {
+            width: 60px;
+            height: 60px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 24px;
+        }
+        
+        .pokemon-cell.obtenido .placeholder {
+            display: none;
+        }
+
+        .menuPokedex {
+            background-color: rgba(229, 225, 215, 0.8);
+            display: flex;
+            justify-content: space-around;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 0;
+            z-index: 100;
+        }
+
+        .menuPokedex a {
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .menuPokedex a.active {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: #e74c3c;
+        }
+
+        /* Modal simplificado */
+        .modal-detalles {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content-detalles {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 300px;
+            width: 90%;
+        }
+
+        .modal-pokemon-img {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 10px;
+            display: block;
+        }
+
+        .pokemon-info {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .pokemon-nombre {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .pokemon-id {
+            color: #777;
+            font-weight: bold;
+        }
+
+        .pokemon-tipo {
+            display: inline-block;
+            margin: 5px;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-weight: bold;
+            text-transform: capitalize;
+            color: white;
+            font-size: 12px;
+        }
+
+        .pokemon-stats {
+            margin: 15px 0;
+        }
+
+        .pokemon-stat {
+            margin-bottom: 5px;
+        }
+
+        .pokemon-movimientos {
+            margin-top: 15px;
+        }
+
+        .pokemon-movimiento {
+            background-color: #f0f0f0;
+            padding: 5px;
+            border-radius: 3px;
+            margin-bottom: 5px;
+            text-align: center;
+            text-transform: capitalize;
+        }
+
+        .close-modal {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .contador-coleccion {
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        /* Estilos para los filtros */
+        .filtros-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+        
+        .filtro-input {
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            min-width: 200px;
+        }
+        
+        .filtro-select {
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            background-color: white;
+            cursor: pointer;
+        }
+        
+        .filtro-boton {
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: none;
+            background-color: #e74c3c;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .filtro-boton:hover {
+            background-color: #c0392b;
+        }
+        
+        .filtro-boton.limpiar {
+            background-color: #777;
+        }
+        
+        .filtro-boton.limpiar:hover {
+            background-color: #555;
+        }
+        
+        .no-resultados {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 20px;
+            color: #777;
+            font-size: 18px;
+        }
