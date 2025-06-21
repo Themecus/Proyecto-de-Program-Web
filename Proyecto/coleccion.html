@@ -5,18 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokédex</title>
     <link rel="stylesheet" href="css/StyleColeccion.css">
+    <script src="js/CodigoColeccion.js" defer></script>
 </head>
 
 
 <body>
 <h1>MI COLECCIÓN POKÉMON</h1>
-    <!-- Puedo cambair esto por un section -->
-    <div class="contador-coleccion" id="contadorColeccion">
+    <!-- el contador de cuantos pokemones llevamos -->
+    <section class="contador-coleccion" id="contadorColeccion">
         Pokémon obtenidos: 0/150
-    </div>
+    </section>
     
-    <!-- Usaremos esto como filtros al tener pokemones, ya cuando tengamos un buen JS lo usare -->
-    <div class="filtros-container">
+    <!-- Usaremos esto como filtros al tener pokemones -->
+    <section class="filtros-container">
         <input type="text" id="filtroNombre" class="filtro-input" placeholder="Buscar por nombre...">
         <select id="filtroTipo" class="filtro-select">
             <option value="">Todos los tipos</option>
@@ -41,41 +42,41 @@
         </select>
         <button id="aplicarFiltros" class="filtro-boton">Filtrar</button>
         <button id="limpiarFiltros" class="filtro-boton limpiar">Limpiar</button>
-    </div>
+    </section>
     
-    <!-- <section class="pokemon-grid" id="coleccionGrid">
-        Las celdas se generarán dinámicamente con JS, no es buena idea hacerlo una por una
-    </section>-->
+    <section class="pokemon-grid" id="coleccionGrid"><!--aqui apareceran los 150 casillas para los pokemones-->
+      
+    </section>
 
-    <!-- Esta es la parte donde mostraremos a detalle los datos de pokemones obtenidos, nesecito cambiar las etiquetas de div por otras
-    <div class="modal-detalles" id="pokemonModalDetalles">
-        <div class="modal-content-detalles">
-            <img class="modal-pokemon-img" id="modalPokemonImagen" src="" alt="">
+    <!--En esta seccion se activara los modal, la informacion de los pokemones cuando se clickee-->
+    <section class="modal-detalles" id="pokemonModalDetalles">
+        <article class="modal-content-detalles">
+            <img class="modal-pokemon-img" id="modalPokemonImagen" src="" alt=""><!--esto sera l imagen-->
             
-            <div class="pokemon-info">
+            <div class="pokemon-info"><!--ID y nombre-->
                 <div class="pokemon-nombre" id="modalPokemonNombre"></div>
                 <div class="pokemon-id">ID: <span id="modalPokemonId"></span></div>
                 <div id="modalTiposContainer"></div>
             </div>
             
-            <div class="pokemon-stats" id="modalStatsContainer">
+            <div class="pokemon-stats" id="modalStatsContainer"><!--sus estadisticas-->
                
             </div>
             
-            <div class="pokemon-movimientos">
+            <div class="pokemon-movimientos"><!--algunos movientos-->
                 <h3>Movimientos</h3>
                 <div id="modalMovimientosContainer">
                    
                 </div>
             </div>
             
-            <button class="close-modal" id="closeModalDetalles">Cerrar</button>
-        </div>
-    </div>-->
+            <button class="close-modal" id="closeModalDetalles">Cerrar</button><!--boton para cerrar el modal-->
+        </article>
+    </section>
 
     <nav class="menuPokedex">
-        <a href="Coleccion.html">Colección</a>
-        <a href="Gacha.html">Gacha</a>
+        <a href="Coleccion.html" class="active">Colección</a>
+        <a href="Gacha.html" class="active">Gacha</a>
         <a href="Intercarmbiar.html" class="active">Desbloqueados</a>
     </nav>
 </body>
