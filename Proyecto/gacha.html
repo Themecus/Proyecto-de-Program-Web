@@ -10,13 +10,11 @@
 <body>
     <h1>CONSIGUE MÁS POKÉMON</h1>
     
-    <section class="contador-coleccion" id="contadorColeccion">
+    <h1 class="contador-coleccion" id="contadorColeccion">
         Pokémon obtenidos: 0/150
-    </section>
-
+    </h1>
     <main>
         <section class="contenido">
-
             <div class="rectangulo" id="pokePack">
                 <p class="texto-dentro">POKEPACK</p>
             </div>
@@ -25,24 +23,26 @@
                 ¡Selecciona un Pokémon para agregar a tu colección!
             </p>
             
-            <div class="seleccion-container" id="seleccionContainer">
+            <section class="seleccion-container" id="seleccionContainer">
                 <!-- Aquí aparecerán los 6 Pokémon para seleccionar -->
-            </div>
+            </section>
             
-            <div>
+            <section>
                 <p class="texto-debajo">
                 PRESIONA EL POKEPACK PARA OBTENER 6 POKÉMON
                 </p>
-            </div>
+            </section>
             
-            <div class="botones-contenedor">
+            <section class="botones-contenedor">
                 <button class="boton-reset" id="resetColeccion">
                     Borrar Colección
                 </button>
-            </div>
-
+                <button class="boton-completar" id="completarColeccion">
+                    Completar Colección
+                </button>
+            </section>
         </section>
-        
+    
         <section class="modal" id="pokemonModal">
             <div class="modal-content">
                 <h2>¡Pokémon Obtenido!</h2>
