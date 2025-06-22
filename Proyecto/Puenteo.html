@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Desbloqueados</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: #e74c3c;
+        }
+        
+        .controles {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: none;
+            background-color: #e74c3c;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #c0392b;
+        }
+        
+        button.exportar {
+            background-color: #3498db;
+        }
+        
+        button.exportar:hover {
+            background-color: #2980b9;
+        }
+        
+        .pokemon-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 80px;
+        }
+        
+        .pokemon-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .pokemon-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .pokemon-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin: 0 auto;
+        }
+        
+        .pokemon-nombre {
+            font-weight: bold;
+            margin: 10px 0 5px;
+            text-transform: capitalize;
+        }
+        
+        .pokemon-id {
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .pokemon-tipos {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .pokemon-tipo {
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 12px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .menuPokedex {
+            background-color: rgba(229, 225, 215, 0.8);
+            display: flex;
+            justify-content: space-around;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 0;
+            z-index: 100;
+        }
+        
+        .menuPokedex a {
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        
+        .menuPokedex a.active {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .modal-exportar {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .modal-content textarea {
+            width: 100%;
+            height: 200px;
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-family: monospace;
+        }
+        
+        .modal-botones {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>POKÉMON DESBLOQUEADOS</h1>
+    
+    <div class="controles">
+        <button id="actualizarBtn">Actualizar Lista</button>
+        <button id="exportarBtn" class="exportar">Exportar Datos</button>
+    </div>
+    
+    <div class="pokemon-container" id="pokemonContainer">
+        <!-- Pokémon desbloqueados se cargarán aquí -->
+    </div>
+    
+    <!-- Modal para exportar datos -->
+    <div class="modal-exportar" id="exportarModal">
+        <div class="modal-content">
+            <h2>Datos de Pokémon Desbloqueados</h2>
+            <p>Puedes copiar esta información para usarla en otras aplicaciones:</p>
+            <textarea id="datosExportacion" readonly></textarea>
+            <div class="modal-botones">
+                <button id="copiarDatos">Copiar</button>
+                <button id="cerrarModal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+    
+    <nav class="menuPokedex">
+        <a href="Prueba4.html">Colección</a><!--Metele tu las direcciones-->
+        <a href="Prueba5.html">Gacha</a>
+        <a href="pokemon-desbloqueados.html" class="active">Desbloqueados</a>
+    </nav>
+
+    <script>
+        // Función para obtener los Pokémon desbloqueados del localStorage
+        function obtenerPokemonDesbloqueados() {
+            const coleccionGuardada = localStorage.getItem('pokemonColeccion');
+            if (coleccionGuardada) {
+                const coleccion = JSON.parse(coleccionGuardada);
+                // Filtrar solo los Pokémon que no son null (obtenidos)
+                return coleccion.filter(pokemon => pokemon !== null);
+            }
+            return [];
+        }
+        
+        // Función para cargar y mostrar los Pokémon desbloqueados
+        async function cargarPokemonDesbloqueados() {
+            const pokemonContainer = document.getElementById('pokemonContainer');
+            pokemonContainer.innerHTML = '<p>Cargando Pokémon desbloqueados...</p>';
+            
+            const pokemonDesbloqueados = obtenerPokemonDesbloqueados();
+            
+            if (pokemonDesbloqueados.length === 0) {
+                pokemonContainer.innerHTML = '<p>No tienes Pokémon desbloqueados todavía.</p>';
+                return;
+            }
+            
+            try {
+                // Obtener datos completos de cada Pokémon desbloqueado
+                const pokemonConDatos = await Promise.all(
+                    pokemonDesbloqueados.map(async pokemon => {
+                        // Si ya tenemos los datos completos, los usamos
+                        if (pokemon.sprites && pokemon.types) {
+                            return pokemon;
+                        }
+                        // Si no, los obtenemos de la API
+                        const response = await fetch(pokemon.url || `https://pokeapi.co/api/v2/pokemon/${pokemon.id}`);
+                        return await response.json();
+                    })
+                );
+                
+                mostrarPokemonDesbloqueados(pokemonConDatos);
+            } catch (error) {
+                console.error('Error al cargar Pokémon desbloqueados:', error);
+                pokemonContainer.innerHTML = '<p>Error al cargar los Pokémon desbloqueados. Intenta recargar la página.</p>';
+            }
+        }
+        
+        // Función para mostrar los Pokémon desbloqueados en la interfaz
+        function mostrarPokemonDesbloqueados(pokemonList) {
+            const pokemonContainer = document.getElementById('pokemonContainer');
+            pokemonContainer.innerHTML = '';
+            
+            pokemonList.forEach(pokemon => {
+                const pokemonCard = document.createElement('div');
+                pokemonCard.className = 'pokemon-card';
+                
+                // Obtener tipos con colores
+                const tiposHTML = pokemon.types.map(type => {
+                    const tipo = type.type.name;
+                    return `<span class="pokemon-tipo" style="background-color: ${getColorPorTipo(tipo)}">${tipo}</span>`;
+                }).join('');
+                
+                pokemonCard.innerHTML = `
+                    <img class="pokemon-img" src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
+                    <div class="pokemon-nombre">${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</div>
+                    <div class="pokemon-id">#${String(pokemon.id).padStart(3, '0')}</div>
+                    <div class="pokemon-tipos">${tiposHTML}</div>
+                `;
+                
+                pokemonContainer.appendChild(pokemonCard);
+            });
+        }
+        
+        // Función para obtener colores según el tipo de Pokémon
+        function getColorPorTipo(tipo) {
+            const colores = {
+                normal: '#A8A878',
+                fire: '#F08030',
+                water: '#6890F0',
+                electric: '#F8D030',
+                grass: '#78C850',
+                ice: '#98D8D8',
+                fighting: '#C03028',
+                poison: '#A040A0',
+                ground: '#E0C068',
+                flying: '#A890F0',
+                psychic: '#F85888',
+                bug: '#A8B820',
+                rock: '#B8A038',
+                ghost: '#705898',
+                dragon: '#7038F8',
+                dark: '#705848',
+                steel: '#B8B8D0',
+                fairy: '#EE99AC'
+            };
+            return colores[tipo] || '#777';
+        }
+        
+        // Función para exportar los datos de los Pokémon desbloqueados
+        function exportarDatos() {
+            const pokemonDesbloqueados = obtenerPokemonDesbloqueados();
+            
+            // Crear un objeto simplificado con los datos que queremos exportar
+            const datosExportar = pokemonDesbloqueados.map(pokemon => ({
+                id: pokemon.id,
+                name: pokemon.name,
+                types: pokemon.types ? pokemon.types.map(t => t.type.name) : []
+            }));
+            
+            // Mostrar los datos en el modal
+            document.getElementById('datosExportacion').value = JSON.stringify(datosExportar, null, 2);
+            document.getElementById('exportarModal').style.display = 'flex';
+        }
+        
+        // Función para copiar los datos al portapapeles
+        function copiarDatos() {
+            const textarea = document.getElementById('datosExportacion');
+            textarea.select();
+            document.execCommand('copy');
+            
+            // Mostrar feedback (podrías añadir un toast o alerta aquí)
+            alert('Datos copiados al portapapeles');
+        }
+        
+        // Eventos al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar Pokémon desbloqueados al inicio
+            cargarPokemonDesbloqueados();
+            
+            // Configurar eventos de los botones
+            document.getElementById('actualizarBtn').addEventListener('click', cargarPokemonDesbloqueados);
+            document.getElementById('exportarBtn').addEventListener('click', exportarDatos);
+            document.getElementById('copiarDatos').addEventListener('click', copiarDatos);
+            document.getElementById('cerrarModal').addEventListener('click', function() {
+                document.getElementById('exportarModal').style.display = 'none';
+            });
+        });
+        
+        // Función para obtener los datos de los Pokémon desbloqueados (para usar en otros scripts)
+        window.obtenerDatosPokemonDesbloqueados = function() {
+            const pokemonDesbloqueados = obtenerPokemonDesbloqueados();
+            return pokemonDesbloqueados.map(pokemon => ({
+                id: pokemon.id,
+                name: pokemon.name,
+                types: pokemon.types ? pokemon.types.map(t => t.type.name) : [],
+                sprite: pokemon.sprites?.front_default || ''
+            }));
+        };
+    </script>
+</body>
+</html>
