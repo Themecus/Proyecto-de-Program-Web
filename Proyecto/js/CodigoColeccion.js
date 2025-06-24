@@ -54,7 +54,7 @@ async function inicializarColeccionGrid() {
     coleccionGrid.innerHTML = '<div class="no-resultados">Cargando colección...</div>';
     
     try {
-        // si caremos de los datos del pokemon, se conseguiran de la API
+        // si no tenemos los datos del pokemon, se conseguiran de la API
         if (todosLosPokemon.length === 0) {
             //nos da la lista basica de pokemones
             const response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${TOTAL_POKEMON}`);

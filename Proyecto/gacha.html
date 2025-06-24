@@ -3,127 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokédex</title>
-    <link rel="stylesheet" href="css/diseno.css">
+    <title>Obtener Pokémon</title>
+    <link rel="stylesheet" href="css/StyleGacha.css">
+    <script src="js/CodigoGacha.js" defer></script>
 </head>
-
-<style>
-    * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-        
-body {
-    font-family: Arial, sans-serif;
-    padding: 10px;
-    background: #f5f5f5;
-}
-        
-        /* Contenedor grid idéntico a tu imagen */
-.pokemon-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    width: 100%;
-}
-        
-        /* Estilo de cada celda/carta */
-.pokemon-cell {
-    background: white;
-    border-radius: 8px;
-    height: 100px; /* Altura fija como en tu ejemplo */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-        
-.pokemon-cell img {
-    width: 60px;
-    height: 60px;
-    object-fit: contain;
-}
-        
-.pokemon-cell p {
-    font-size: 12px;
-    margin-top: 5px;
-    font-weight: bold;
-}
-
-.menuPokedex {
-    background-color: rgba(229, 225, 215, 0.5);
-    display: flex;
-    justify-content: space-between;
-    gap: 20px; /* Espacio entre elementos */
-    position: fixed;
-    left: 20%;
-    transform: translate(0px, -10px);    
-    bottom: 0px;
-    padding: 30px;
-}
-
-.contenido {
-    width: 100%;
-    max-width: 500px;
-    margin-top: 60px; /* Para que no quede detrás del menú fijo */
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.rectangulo {
-    width: 90%;
-    max-width: 300px;
-    height: 150px;
-    background-color: #f0f0f0;
-    border: 2px solid #333;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-        
-.texto-dentro {
-    font-size: 18px;
-    color: #333;
-    text-align: center;
-    padding: 10px;
-}
-        
-.texto-debajo {
-    font-size: 16px;
-    color: #666;
-    text-align: center;
-    width: 90%;
-    max-width: 300px;
-}
-</style>
-
 <body>
-    <h1>CONSIGUE MAS CARTAS!</h1>
+    <h1>CONSIGUE MÁS POKÉMON</h1>
+    
+    <h1 class="contador-coleccion" id="contadorColeccion">
+        Pokémon obtenidos: 0/150
+    </h1>
+    <main>
+        <section class="contenido">
+            <div class="rectangulo" id="pokePack">
+                <p class="texto-dentro">POKEPACK</p><!--Este es el texto del sobre, deberia agrearle una fuente mas fuerte a la mayoria de textos-->
+            </div>
+            
+            <p class="instruccion-seleccion" id="instruccionSeleccion">
+                ¡Selecciona un Pokémon para agregar a tu colección!
+            </p>
+            
+            <section class="seleccion-container" id="seleccionContainer">
+                <!-- Aquí aparecerán los 6 Pokémon para seleccionar -->
+            </section>
+            
+            <section>
+                <p class="texto-debajo">
+                PRESIONA EL POKEPACK PARA OBTENER 6 POKÉMON
+                </p>
+            </section>
+            
+            <section class="botones-contenedor">
+                <button class="boton-reset" id="resetColeccion">
+                    Borrar Colección
+                </button>
+                <button class="boton-completar" id="completarColeccion">
+                    Completar Colección
+                </button>
+            </section>
+        </section>
+        <!-- Este bloque mostra el pokemon escogido -->
+        <section class="modal" id="pokemonModal">
+            <div class="modal-content">
+                <h2>¡Pokémon Obtenido!</h2>
+                <img id="modalPokemonImg" src="" alt="">
+                <p id="modalPokemonName"></p>
+                <p>ID: <span id="modalPokemonId"></span></p>
+                <button id="closeModal">Aceptar</button>
+            </div>
+        </section>
+    </main>
+    
 
     <nav class="menuPokedex">
-        <div><a href="coleccion.html">Colección</a></div>
-        <div><a href="gacha.html">Gacha</a></div>
-        <div><a href="intercambiar.html">Intercambiar</a></div>
+        <a href="Coleccion.html" class="active">Colección</a>
+        <a href="Gacha.html" class="active">Gacha</a>
+        <a href="Intercarmbiar.html" class="active">Intercarmbiar</a>
     </nav>
-
-    <section class="contenido">
-        <div class="rectangulo">
-            <p class="texto-dentro">POKEPACK</p>
-        </div>
-
-        <div>
-            <p class="texto-debajo">
-            PRESIONAR EL POKEPACK
-            </p>
-        </div>
-        
-    </section>
 </body>
 </html>
