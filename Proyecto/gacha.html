@@ -6,6 +6,7 @@
     <title>Obtener Pokémon</title>
     <link rel="stylesheet" href="css/StyleGacha.css">
     <script src="js/CodigoGacha.js" defer></script>
+    <script src="js/CodigoMusica.js" defer></script>
 </head>
 <body>
     <h1>CONSIGUE MÁS POKÉMON</h1>
@@ -40,6 +41,8 @@
                 <button class="boton-completar" id="completarColeccion">
                     Completar Colección
                 </button>
+
+                <button id="play" class="musica">REPRODUCIR MUSICA</button>
             </section>
         </section>
         <!-- Este bloque mostra el pokemon escogido -->
@@ -60,5 +63,10 @@
         <a href="Gacha.html" class="active">Gacha</a>
         <a href="Intercarmbiar.html" class="active">Intercarmbiar</a>
     </nav>
+
+    <audio id="audioBox" autoplay loop>
+        <source src="music/gachaMusic.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio HTML5.<!--En caso que algo se atasque esta este mensaje-->
+    </audio>
 </body>
 </html>

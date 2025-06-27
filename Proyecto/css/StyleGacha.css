@@ -233,3 +233,18 @@ h1 {
     font-weight: bold;
     color: #e74c3c;
 }
+
+.musica {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: none;
+    background-color: #e74c3c;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.musica:hover{
+    background-color: #c0392b;
+}
