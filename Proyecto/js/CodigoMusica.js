@@ -6,10 +6,10 @@ let isPlaying = false;
 musicBtn.addEventListener("click", function() {
     if (isPlaying) {
         bgMusic.pause();
-        musicBtn.textContent = "Reproduciendo";
+        musicBtn.textContent = "REPRODUCIR MUSICA";
     } else {
         bgMusic.play();
-        musicBtn.textContent = "Pausa";
+        musicBtn.textContent = "PAUSAR";
     }
     isPlaying = !isPlaying;
 });
