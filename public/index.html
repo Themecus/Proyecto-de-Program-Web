@@ -396,6 +396,34 @@
             });
         }
 
+        let cartasSeleccionadas = [];
+
+        function activarSeleccionDeCartas() {
+          const cartas = document.querySelectorAll('#intercambioGrid .pokemon-cell.obtenido');
+        
+          cartas.forEach(carta => {
+            carta.addEventListener('click', function () {
+              const id = this.dataset.pokemonId;
+            
+              // Si ya está seleccionada, deseleccionarla
+              if (cartasSeleccionadas.includes(id)) {
+                cartasSeleccionadas = cartasSeleccionadas.filter(c => c !== id);
+                this.classList.remove('seleccionada');
+                return;
+              }
+          
+              // Si no está seleccionada y hay menos de 6, seleccionarla
+              if (cartasSeleccionadas.length < 6) {
+                cartasSeleccionadas.push(id);
+                this.classList.add('seleccionada');
+              } /*else {
+                alert('Solo puedes seleccionar hasta 6 cartas');
+              }*/
+          
+              console.log('Cartas seleccionadas:', cartasSeleccionadas);
+            });
+          });
+        }
 
         // Función para abrir un Poképack
         async function abrirPokePack() {
