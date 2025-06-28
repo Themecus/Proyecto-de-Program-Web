@@ -205,6 +205,47 @@
             transition: all 0.2s ease;
         }
 
+        .bandeja-intercambio {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fefefe;
+            border: 2px solid #e1e1e1;
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        .bandeja-intercambio h3 {
+            font-size: 16px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        #cartasRecibidas {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .boton-enviar {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.boton-enviar:hover {
+  background-color: #2980b9;
+}
+
     </style>
 </head>
 <body>
@@ -234,6 +275,16 @@
     <!-- Petana para el intercambio-->
      <div id="intercambioTab" class="tab-container">
         <h1>INTERCAMBIO DE POKÉMON</h1>
+
+        <!--- Bandeja para la visualizacion de que cartas se cambiara-->
+
+        <div id="bandejaRecibida" class="bandeja-intercambio">
+            <h3>Propuesta de intercambio entrante:</h3>
+            <div class="pokemon-grid" id="cartasRecibidas"></div>
+        </div>
+        <button onclick="enviarPropuestaDeIntercambio()" class="boton-enviar">
+  Enviar intercambio
+</button>
         <section class="contenido">
             <h2>Tus Pokémon disponibles</h2>
             <div id="intercambioGrid" class="pokemon-grid"></div>
@@ -256,6 +307,10 @@
         <div><a href="#" class="tab-link" data-tab="gachaTab">Gacha</a></div>
         <div><a href="#" class="tab-link" data-tab="intercambioTab">Intercambio</a></div>
     </nav>
+
+    <!-- esto es para el socket-->
+
+    <script src="/socket.io/socket.io.js"></script>
 
     <script>
         // Variables globales
@@ -356,74 +411,97 @@
             });
         }
         
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Esta funcion hace que se muestre solo las cartas que estan disponibles para intercambio
+
+  const socket = io(); // Conexión con el servidor
+
+  let cartasSeleccionadas = [];
+
+  function inicializarIntercambioGrid() {
+    const intercambioGrid = document.getElementById('intercambioGrid');
+    intercambioGrid.innerHTML = '';
+
+    for (let i = 0; i < coleccionPokemon.length; i++) {
+      const pokemon = coleccionPokemon[i];
+      if (pokemon) {
+        const cell = document.createElement('div');
+        cell.className = 'pokemon-cell obtenido';
+        cell.dataset.pokemonId = pokemon.id;
+
+        cell.innerHTML = `
+          <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
+          <p>#${String(pokemon.id).padStart(3, '0')}</p>
+        `;
+        intercambioGrid.appendChild(cell);
+      }
+    }
+
+    activarSeleccionDeCartas(); // Activar lógica de selección después de renderizar
+  }
+
+  function activarSeleccionDeCartas() {
+    const cartas = document.querySelectorAll('#intercambioGrid .pokemon-cell.obtenido');
+
+    cartas.forEach(carta => {
+      carta.addEventListener('click', function () {
+        const id = this.dataset.pokemonId;
+
+        if (cartasSeleccionadas.includes(id)) {
+          cartasSeleccionadas = cartasSeleccionadas.filter(c => c !== id);
+          this.classList.remove('seleccionada');
+          return;
+        }
+
+        if (cartasSeleccionadas.length < 6) {
+          cartasSeleccionadas.push(id);
+          this.classList.add('seleccionada');
+        }
+
+        console.log('Cartas seleccionadas:', cartasSeleccionadas);
+      });
+    });
+  }
+
+  function enviarPropuestaDeIntercambio() {
+    if (cartasSeleccionadas.length === 0) {
+      alert('Selecciona al menos una carta para intercambiar');
+      return;
+    }
+
+    socket.emit('propuesta-intercambio', {
+      cartas: cartasSeleccionadas
+    });
+
+    console.log('🛰️ Propuesta enviada con cartas:', cartasSeleccionadas);
+  }
+
+  socket.on('propuesta-recibida', data => {
+    const contenedor = document.getElementById('cartasRecibidas');
+    contenedor.innerHTML = ''; // Limpiar las anteriores
+
+    data.cartas.forEach(id => {
+      fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+        .then(res => res.json())
+        .then(pokemon => {
+          const carta = document.createElement('div');
+          carta.className = 'pokemon-cell obtenido';
+          carta.innerHTML = `
+            <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
+            <p>#${String(pokemon.id).padStart(3, '0')}</p>
+          `;
+          contenedor.appendChild(carta);
+        })
+        .catch(error => {
+          console.error('❌ Error cargando Pokémon', id, error);
+        });
+    });
+  });
+
+
         
-        function inicializarIntercambioGrid() {
-            const intercambioGrid = document.getElementById('intercambioGrid');
-            intercambioGrid.innerHTML = '';
 
-            for (let i = 0; i < coleccionPokemon.length; i++) {
-                const pokemon = coleccionPokemon[i];
-                if (pokemon) {
-                    const cell = document.createElement('div');
-                    cell.className = 'pokemon-cell obtenido';
-                    cell.dataset.pokemonId = pokemon.id;
-
-                    cell.innerHTML = `
-                        <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
-                        <p>#${String(pokemon.id).padStart(3, '0')}</p>
-                    `;
-                    intercambioGrid.appendChild(cell);
-                }
-            }
-            activarSeleccionDeCartas();
-        }
-
-        function activarSeleccionDeCartas() {
-            const cartas = document.querySelectorAll('#intercambioGrid .pokemon-cell.obtenido');
-
-            cartas.forEach(carta => {
-                carta.addEventListener('click', function () {
-                // Quitar la selección previa si existe
-                cartas.forEach(c => c.classList.remove('seleccionada'));
-
-                // Marcar esta como seleccionada
-                this.classList.add('seleccionada');
-
-                const idSeleccionado = this.dataset.pokemonId;
-                console.log(`Carta seleccionada: ${idSeleccionado}`); // Podrías usar esto más adelante para manejar el intercambio
-                });
-            });
-        }
-
-        let cartasSeleccionadas = [];
-
-        function activarSeleccionDeCartas() {
-          const cartas = document.querySelectorAll('#intercambioGrid .pokemon-cell.obtenido');
-        
-          cartas.forEach(carta => {
-            carta.addEventListener('click', function () {
-              const id = this.dataset.pokemonId;
-            
-              // Si ya está seleccionada, deseleccionarla
-              if (cartasSeleccionadas.includes(id)) {
-                cartasSeleccionadas = cartasSeleccionadas.filter(c => c !== id);
-                this.classList.remove('seleccionada');
-                return;
-              }
-          
-              // Si no está seleccionada y hay menos de 6, seleccionarla
-              if (cartasSeleccionadas.length < 6) {
-                cartasSeleccionadas.push(id);
-                this.classList.add('seleccionada');
-              } /*else {
-                alert('Solo puedes seleccionar hasta 6 cartas');
-              }*/
-          
-              console.log('Cartas seleccionadas:', cartasSeleccionadas);
-            });
-          });
-        }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         // Función para abrir un Poképack
         async function abrirPokePack() {
