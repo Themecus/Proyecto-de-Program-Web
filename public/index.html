@@ -282,9 +282,10 @@
             <h3>Propuesta de intercambio entrante:</h3>
             <div class="pokemon-grid" id="cartasRecibidas"></div>
         </div>
-        <button onclick="enviarPropuestaDeIntercambio()" class="boton-enviar">
-  Enviar intercambio
-</button>
+        <!-- Ahora correctamente -->
+        <button onclick="confirmarEntrega()" class="boton-enviar">
+            Enviar intercambio
+        </button>
         <section class="contenido">
             <h2>Tus Pokémon disponibles</h2>
             <div id="intercambioGrid" class="pokemon-grid"></div>
@@ -506,7 +507,67 @@
   });
 
 
+  function confirmarEntrega() {
+  if (cartasSeleccionadas.length === 0) {
+    alert('No hay cartas que enviar');
+    return;
+  }
+
+  socket.emit('intercambio-confirmado', {
+    cartas: cartasSeleccionadas
+  });
+
+  console.log('📦 Intercambio enviado al otro jugador:', cartasSeleccionadas);
+
+  // Opcional: vaciar selección y visualmente limpiar
+  cartasSeleccionadas = [];
+  document.querySelectorAll('.seleccionada').forEach(c => c.classList.remove('seleccionada'));
+}
         
+socket.on('intercambio-recibido', data => {
+  console.log('🧧 Cartas recibidas vía intercambio:', data.cartas);
+
+  let nuevas = 0;
+
+  data.cartas.forEach(id => {
+    const yaLoTengo = coleccionPokemon.some(p => p && p.id == id);
+
+    if (!yaLoTengo) {
+      fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+        .then(res => res.json())
+        .then(pokemon => {
+          // Agregar a colección en la primera posición vacía
+          for (let i = 0; i < coleccionPokemon.length; i++) {
+            if (!coleccionPokemon[i]) {
+              coleccionPokemon[i] = {
+                id: pokemon.id,
+                name: pokemon.name,
+                sprites: pokemon.sprites
+              };
+              nuevas++;
+              break;
+            }
+          }
+
+          // Actualizar visual
+          inicializarColeccionGrid(); // <-- tu función para recargar la vista de colección
+        });
+    } else {
+      console.log(`🔁 Pokémon repetido (${id}) no se agrega`);
+    }
+  });
+
+  // Opcional: alertar si se ganó alguno nuevo
+  setTimeout(() => {
+    if (nuevas > 0) {
+      alert(`¡Has recibido ${nuevas} Pokémon nuevo(s) por intercambio!`);
+    } else {
+      alert('Recibiste Pokémon repetidos que ya tenías 🙃');
+    }
+  }, 1000);
+});
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

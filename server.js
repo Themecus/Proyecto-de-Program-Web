@@ -61,6 +61,10 @@ io.on('connection', socket => {
     socket.broadcast.emit('propuesta-recibida', data);
   });
 
+  socket.on('intercambio-confirmado', data => {
+  socket.broadcast.emit('intercambio-recibido', data);
+});
+
   socket.on('disconnect', () => {
     console.log('Usuario desconectado:', socket.id);
   });
