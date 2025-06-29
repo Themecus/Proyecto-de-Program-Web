@@ -440,28 +440,35 @@
     activarSeleccionDeCartas(); // Activar lógica de selección después de renderizar
   }
 
+  //Esto es para enviar la propuesta
+
+
   function activarSeleccionDeCartas() {
-    const cartas = document.querySelectorAll('#intercambioGrid .pokemon-cell.obtenido');
+  const cartas = document.querySelectorAll('#intercambioGrid .pokemon-cell.obtenido');
 
-    cartas.forEach(carta => {
-      carta.addEventListener('click', function () {
-        const id = this.dataset.pokemonId;
+  cartas.forEach(carta => {
+    carta.addEventListener('click', function () {
+      const id = this.dataset.pokemonId;
 
-        if (cartasSeleccionadas.includes(id)) {
-          cartasSeleccionadas = cartasSeleccionadas.filter(c => c !== id);
-          this.classList.remove('seleccionada');
-          return;
-        }
+      // Quitar si ya está seleccionada
+      if (cartasSeleccionadas.includes(id)) {
+        cartasSeleccionadas = cartasSeleccionadas.filter(c => c !== id);
+        this.classList.remove('seleccionada');
+      } else if (cartasSeleccionadas.length < 6) {
+        // Agregar si hay menos de 6
+        cartasSeleccionadas.push(id);
+        this.classList.add('seleccionada');
+      }
 
-        if (cartasSeleccionadas.length < 6) {
-          cartasSeleccionadas.push(id);
-          this.classList.add('seleccionada');
-        }
+      console.log('Cartas seleccionadas:', cartasSeleccionadas);
 
-        console.log('Cartas seleccionadas:', cartasSeleccionadas);
+      // 🔄 Emitir automáticamente después de cada cambio
+      socket.emit('propuesta-intercambio', {
+        cartas: cartasSeleccionadas
       });
     });
-  }
+  });
+}
 
   function enviarPropuestaDeIntercambio() {
     if (cartasSeleccionadas.length === 0) {
