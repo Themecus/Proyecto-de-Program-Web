@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex</title>
+    <link rel="stylesheet" href="css/StyleIntercambio.css">
+</head>
+
+<body>
+    <h1>INTERCAMBIA TUS CARTAS</h1>
+
+     <div id="intercambioTab" class="tab-container">
+        
+        <!--- Bandeja para la visualizacion de que cartas se cambiara-->
+
+        <div id="bandejaRecibida" class="bandeja-intercambio">
+            <h3>Propuesta de intercambio entrante:</h3>
+            <div class="pokemon-grid" id="cartasRecibidas"></div>
+        </div>
+        <!-- Ahora correctamente -->
+        <button onclick="confirmarEntrega()" class="boton-enviar">
+            Enviar intercambio
+        </button>
+        <section class="contenido">
+            <h2>Tus Pokémon disponibles</h2>
+            <div id="intercambioGrid" class="pokemon-grid"></div>
+        </section>
+    </div> 
+
+    <nav class="menuPokedex">
+            <a href="coleccion.html" class="active" >Coleccion</a>
+            <a href="gacha.html" class="active" >Gacha</a>
+            <a href="intercambiar.html" class="active" >Intercambiar</a>
+    </nav>
+
+    <!--Esto es para el socket-->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script src="js/CodigoIntercambio.js"></script>
+
+</body>
