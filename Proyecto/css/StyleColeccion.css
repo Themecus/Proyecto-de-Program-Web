@@ -95,6 +95,11 @@ body {
     color: white;
 }
 
+.menuPokedex a.active:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 h1 {
     text-align: center;
     margin: 20px 0;
@@ -191,6 +196,12 @@ h1 {
     font-weight: bold;
 }
 
+.close-modal:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 .contador-coleccion {
     background-color: #333;
     color: white;
@@ -240,6 +251,8 @@ h1 {
 
 .filtro-boton:hover {
     background-color: #c0392b;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .filtro-boton.limpiar {

@@ -137,6 +137,12 @@ h1 {
     color: white;
 }
 
+.menuPokedex a.active:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
 .botones-contenedor {
     display: flex;
     gap: 10px;
@@ -158,6 +164,8 @@ h1 {
 
 .boton-reset:hover {
     background-color: #ff0000;
+    transform: scale(1.05); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
 .boton-completar {
@@ -173,6 +181,8 @@ h1 {
 
 .boton-completar:hover {
     background-color: #388e3c;
+    transform: scale(1.05); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 
 .contador-coleccion {
