@@ -213,11 +213,21 @@ h1 {
     cursor: pointer;
     transition: all 0.3s;
     border: 2px solid transparent;
+    animation: moviento-desbloqueo 2s ease;
+}
+
+@keyframes moviento-desbloqueo{
+    0%  {transform: rotate(5deg);}
+    25% {transform: rotate(-5deg);}
+    50% {transform: rotate(5deg);}
+    75%{transform: rotate(-5deg);}
+    100%{transform: rotate(0deg);}
 }
 
 .pokemon-seleccion:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    background-color: rgb(161, 159, 159);
 }
 
 .pokemon-seleccion.seleccionado {
@@ -244,3 +254,4 @@ h1 {
     font-weight: bold;
     color: #e74c3c;
 }
+
