@@ -1,40 +1,4 @@
 
-/*const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
-
-const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
-
-app.use(express.static('public')); // Asegúrate de que tu index.html está en /public
-
-// 👇 Todo esto es correcto y debe ir junto
-io.on('connection', socket => {
-  console.log('Usuario conectado:', socket.id);
-
-  socket.on('mensaje', data => {
-    socket.broadcast.emit('mensaje', data);
-  });
-
-  socket.on('propuesta-intercambio', data => {
-    socket.broadcast.emit('propuesta-recibida', data);
-  });
-
-  socket.on('intercambio-confirmado', data => {
-  socket.broadcast.emit('intercambio-recibido', data);
-});
-
-  socket.on('disconnect', () => {
-    console.log('Usuario desconectado:', socket.id);
-  });
-});
-
-server.listen(3000, () => {
-  console.log('Servidor corriendo en http://localhost:3000');
-});*/
-
-
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -67,6 +31,6 @@ io.on('connection', socket => {
 });
 
 // Iniciar servidor
-http.listen(3000, () => {
-  console.log('Servidor corriendo en http://localhost:3000');
+http.listen(8080, '0.0.0.0',() => {
+  console.log('Servidor corriendo en http://localhost:8080');
 });
