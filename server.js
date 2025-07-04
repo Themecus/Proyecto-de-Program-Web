@@ -15,7 +15,8 @@ app.get('/', (req, res) => {
 
 // Lógica de sockets para intercambio de Pokémon
 io.on('connection', socket => {
-  console.log('Un usuario se conectó');
+  //console.log('Un usuario se conectó');
+  console.log('Usuario conectado:', socket.id);
 
   socket.on('propuesta-intercambio', data => {
     socket.broadcast.emit('propuesta-recibida', data);
@@ -31,6 +32,7 @@ io.on('connection', socket => {
 });
 
 // Iniciar servidor
-http.listen(8080, '0.0.0.0',() => {
-  console.log('Servidor corriendo en http://localhost:8080');
+http.listen(3000, '0.0.0.0',() => {
+  console.log('Servidor corriendo en http://localhost:3000');  
+  
 });
