@@ -37,6 +37,7 @@ server.listen(3000, () => {
 //socket.on('mensaje', data => {
   // (esto era para texto libre, lo mantenemos si lo necesitas)
 //});
+
 */
 
 const express = require('express');
