@@ -1,4 +1,4 @@
-/*
+
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -32,7 +32,6 @@ io.on('connection', socket => {
 });
 
 // Iniciar servidor
-server.listen(3000, '0.0.0.0',() => {
+http.listen(3000, '0.0.0.0',() => {
   console.log('Servidor corriendo en http://localhost:3000');
 });
-*/
