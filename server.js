@@ -71,6 +71,6 @@ io.on('connection', socket => {
   });
 });
 
-server.listen(3000, () => {
+server.listen(3000, '0.0.0.0',() => {
   console.log('Servidor corriendo en http://localhost:3000');
 });
