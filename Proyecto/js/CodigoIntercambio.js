@@ -31,6 +31,15 @@ function actualizarEstadoBoton() {
   boton.disabled = !(tieneCartasPropias && tieneCartasRecibidas);
 }
 
+function mostrarNotificacion(mensaje) {
+  document.getElementById('mensajeNotificacion').textContent = mensaje;
+  document.getElementById('notificacionPokemon').style.display = 'block';
+}
+
+function cerrarNotificacion() {
+  document.getElementById('notificacionPokemon').style.display = 'none';
+}
+
 // 🎴 Mostrar solo las cartas desbloqueadas
 function mostrarCartasDesbloqueadas() {
   const grid = document.getElementById('intercambioGrid');
@@ -122,7 +131,7 @@ function mostrarCartasDesbloqueadas() {
 
 function confirmarEntrega() {
   if (cartasSeleccionadas.length === 0 || propuestaRecibida.length === 0) {
-    alert('Asegúrate de que ambos jugadores hayan seleccionado cartas.');
+    mostrarNotificacion('Asegúrate de que ambos jugadores hayan seleccionado cartas.');
     return;
   }
 
@@ -133,7 +142,7 @@ function confirmarEntrega() {
   });
 
   if (duplicadasRecibidas.length > 0) {
-    alert('🚫 Intercambio cancelado:\nYa tienes alguna de las cartas que te están enviando (#' + duplicadasRecibidas.join(', ') + ')');
+    mostrarNotificacion(' Intercambio cancelado:\nYa tienes alguna de las cartas que te están enviando (#' + duplicadasRecibidas.join(', ') + ')');
     return;
   }
 
@@ -144,7 +153,7 @@ function confirmarEntrega() {
     recibir: propuestaRecibida
   });
 
-  alert('¡Intercambio enviado!');
+  mostrarNotificacion('¡Intercambio enviado!');
 }
 
 canal.subscribe('intercambio-confirmado', mensaje => {
@@ -188,7 +197,7 @@ canal.subscribe('intercambio-confirmado', mensaje => {
             }, 300);
 
             if (nuevasCartas.length > 0) {
-              alert('¡Tu colección fue actualizada con cartas del intercambio!');
+              mostrarNotificacion('¡Tu colección fue actualizada con cartas del intercambio!');
             }
           }
         });
@@ -206,7 +215,7 @@ canal.subscribe('intercambio-confirmado', mensaje => {
       actualizarEstadoBoton();
     }, 300);
 
-    alert('¡No recibiste cartas nuevas, pero se refrescó la colección!');
+    mostrarNotificacion('¡No recibiste cartas nuevas, pero se refrescó la colección!');
   }
 });
 
