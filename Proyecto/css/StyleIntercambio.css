@@ -120,6 +120,10 @@ h1 {
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s ease;
+
+  display: block;       /* Asegura que ocupe una sola línea */
+  margin-left: auto;    /* Empuja hacia la derecha */
+  margin-right: auto;   /* Empuja hacia la izquierda */
 }
 
 .boton-enviar:hover {

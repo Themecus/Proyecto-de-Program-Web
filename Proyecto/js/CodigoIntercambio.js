@@ -74,13 +74,70 @@ function mostrarCartasDesbloqueadas() {
 }
 
 
-function confirmarEntrega() {
-  // Solo confirmar si tienes una propuesta recibida
+/*function confirmarEntrega() {
   if (cartasSeleccionadas.length === 0 || propuestaRecibida.length === 0) {
-    alert('Asegúrate de haber seleccionado tus cartas y que el otro jugador también lo haya hecho.');
+    alert('Asegúrate de que ambos jugadores hayan seleccionado cartas.');
     return;
   }
 
+  // 📦 1. Verificar si tú recibes duplicadas
+  const duplicadasRecibidas = propuestaRecibida.filter(id => {
+    const yaTengo = coleccionPokemon[id - 1];
+    return yaTengo !== null;
+  });
+
+  // 📦 2. Verificar si el otro usuario recibiría duplicadas (usando colección simulada)
+  // Simulamos lo que el otro recibiría si su colección fuera como la tuya
+  const duplicadasQueEnvias = cartasSeleccionadas.filter(id => {
+    const yaTengo = coleccionPokemon[id - 1];
+    return yaTengo !== null; // Suponemos que lo que tú tienes, él podría tener
+  });
+
+  const duplicadasTotales = [...duplicadasRecibidas, ...duplicadasQueEnvias];
+
+  if (duplicadasRecibidas.length > 0 || duplicadasQueEnvias.length > 0) {
+    let mensaje = '🚫 Intercambio cancelado:\n';
+
+    if (duplicadasRecibidas.length > 0) {
+      mensaje += `- Vas a recibir cartas que ya tienes (#${duplicadasRecibidas.join(', ')})\n`;
+    }
+
+    if (duplicadasQueEnvias.length > 0) {
+      mensaje += `- Estás enviando cartas que el otro jugador ya podría tener (#${duplicadasQueEnvias.join(', ')})`;
+    }
+
+    alert(mensaje);
+    return;
+  }
+
+  // ✅ Si no hay duplicados, procedemos
+  canal.publish('intercambio-confirmado', {
+    from: userId,
+    enviar: cartasSeleccionadas,
+    recibir: propuestaRecibida
+  });
+
+  alert('¡Intercambio enviado!');
+}*/
+
+function confirmarEntrega() {
+  if (cartasSeleccionadas.length === 0 || propuestaRecibida.length === 0) {
+    alert('Asegúrate de que ambos jugadores hayan seleccionado cartas.');
+    return;
+  }
+
+  // ✅ Validar solo lo que tú vas a recibir
+  const duplicadasRecibidas = propuestaRecibida.filter(id => {
+    const yaTengo = coleccionPokemon[id - 1];
+    return yaTengo !== null;
+  });
+
+  if (duplicadasRecibidas.length > 0) {
+    alert('🚫 Intercambio cancelado:\nYa tienes alguna de las cartas que te están enviando (#' + duplicadasRecibidas.join(', ') + ')');
+    return;
+  }
+
+  // ✅ Si todo ok, enviamos intercambio
   canal.publish('intercambio-confirmado', {
     from: userId,
     enviar: cartasSeleccionadas,
@@ -117,12 +174,17 @@ canal.subscribe('intercambio-confirmado', mensaje => {
 
           cartasPendientes--;
 
-          // Si ya se procesaron todas las nuevas cartas
           if (cartasPendientes === 0) {
             localStorage.setItem('pokemonColeccion', JSON.stringify(coleccion));
 
             setTimeout(() => {
-              mostrarCartasDesbloqueadas(); // ✅ Actualiza grilla visual
+              cargarColeccion();
+              mostrarCartasDesbloqueadas();
+
+              // ✅ Vacía bandeja y estado al finalizar intercambio
+              document.getElementById('cartasRecibidas').innerHTML = '';
+              propuestaRecibida = [];
+              actualizarEstadoBoton();
             }, 300);
 
             if (nuevasCartas.length > 0) {
@@ -137,6 +199,11 @@ canal.subscribe('intercambio-confirmado', mensaje => {
   if (cartasPendientes === 0 && nuevasCartas.length === 0) {
     setTimeout(() => {
       mostrarCartasDesbloqueadas();
+
+      // ✅ También vaciar si no hubo nuevas cartas
+      document.getElementById('cartasRecibidas').innerHTML = '';
+      propuestaRecibida = [];
+      actualizarEstadoBoton();
     }, 300);
 
     alert('¡No recibiste cartas nuevas, pero se refrescó la colección!');
