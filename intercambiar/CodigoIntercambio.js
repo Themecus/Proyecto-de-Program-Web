@@ -40,7 +40,7 @@ function cerrarNotificacion() {
   document.getElementById('notificacionPokemon').style.display = 'none';
 }
 
-// 🎴 Mostrar solo las cartas desbloqueadas
+//  Mostrar solo las cartas desbloqueadas
 function mostrarCartasDesbloqueadas() {
   const grid = document.getElementById('intercambioGrid');
   grid.innerHTML = '';
