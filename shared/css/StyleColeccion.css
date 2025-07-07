@@ -1,3 +1,33 @@
+:root {
+  /* Colores principales */
+  --color-primary: #e74c3c;
+  --color-primary-hover: #c0392b;
+  --color-secondary: #4e4a4a;
+  --color-dark-bg: rgb(55, 49, 49);
+  --color-success: #4caf50;
+  --color-success-bg: #e8f5e9;
+  --color-white: white;
+  --color-black: rgb(0, 0, 0);
+  --color-gray: #999;
+  --color-light-gray: #777;
+  --color-border: #ddd;
+  --color-bg-light: #f0f0f0;
+  
+  /* Tamaños */
+  --pokemon-img-size: 60px;
+  --modal-img-size: 120px;
+  --border-radius: 8px;
+  --border-radius-btn: 20px;
+  --border-radius-modal: 10px;
+  
+  /* Sombras */
+  --shadow-default: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.2);
+  
+  /* Transiciones */
+  --transition-default: all 0.3s;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +37,7 @@
 body {
     font-family: Arial, sans-serif;
     padding: 10px;
-    background: #f5f5f5;
+    background: var(--color-secondary);
 }
 
 .pokemon-grid {
@@ -19,26 +49,30 @@ body {
 }
 
 .pokemon-cell {
-    background: white;
-    border-radius: 8px;
+    background: var(--color-dark-bg);
+    border-radius: var(--border-radius);
     height: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transition: all 0.3s;
+    box-shadow: var(--shadow-default);
+    transition: var(--transition-default);
     cursor: pointer;
 }
 
 .pokemon-cell.obtenido {
-    background-color: #e8f5e9;
-    border: 2px solid #4caf50;
+    background-color: var(--color-success-bg);
+    border: 2px solid var(--color-success);
+}
+
+.pokemon-cell.obtenido:hover {
+  transform: scale(1.05);
 }
 
 .pokemon-cell img {
-    width: 60px;
-    height: 60px;
+    width: var(--pokemon-img-size);
+    height: var(--pokemon-img-size);
     object-fit: contain;
     display: none;
 }
@@ -51,16 +85,17 @@ body {
     font-size: 12px;
     margin-top: 5px;
     font-weight: bold;
+    color: var(--color-black);
 }
 
 .pokemon-cell .placeholder {
-    width: 60px;
-    height: 60px;
-    background-color: #eee;
+    width: var(--pokemon-img-size);
+    height: var(--pokemon-img-size);
+    background: var(--color-dark-bg);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #999;
+    color: var(--color-gray);
     font-size: 24px;
 }
 
@@ -81,7 +116,7 @@ body {
 }
 
 .menuPokedex a {
-    color: #e74c3c;
+    color: var(--color-primary);
     text-decoration: none;
     font-weight: bold;
     padding: 5px 10px;
@@ -89,14 +124,19 @@ body {
 }
 
 .menuPokedex a.active {
-    background-color: #e74c3c;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.menuPokedex a.active:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-hover);
 }
 
 h1 {
     text-align: center;
     margin: 20px 0;
-    color: #e74c3c;
+    color: var(--color-primary);
 }
 
 /* Modal simplificado */
@@ -114,16 +154,16 @@ h1 {
 }
 
 .modal-content-detalles {
-    background-color: white;
+    background-color: var(--color-white);
     padding: 20px;
-    border-radius: 10px;
+    border-radius: var(--border-radius-modal);
     max-width: 300px;
     width: 90%;
 }
 
 .modal-pokemon-img {
-    width: 120px;
-    height: 120px;
+    width: var(--modal-img-size);
+    height: var(--modal-img-size);
     margin: 0 auto 10px;
     display: block;
 }
@@ -141,7 +181,7 @@ h1 {
 }
 
 .pokemon-id {
-    color: #777;
+    color: var(--color-light-gray);
     font-weight: bold;
 }
 
@@ -152,7 +192,7 @@ h1 {
     border-radius: 15px;
     font-weight: bold;
     text-transform: capitalize;
-    color: white;
+    color: var(--color-white);
     font-size: 12px;
 }
 
@@ -169,7 +209,7 @@ h1 {
 }
 
 .pokemon-movimiento {
-    background-color: #f0f0f0;
+    background-color: var(--color-bg-light);
     padding: 5px;
     border-radius: 3px;
     margin-bottom: 5px;
@@ -178,8 +218,8 @@ h1 {
 }
 
 .close-modal {
-    background: #e74c3c;
-    color: white;
+    background: var(--color-primary);
+    color: var(--color-white);
     border: none;
     padding: 8px 15px;
     border-radius: 5px;
@@ -189,11 +229,17 @@ h1 {
     font-weight: bold;
 }
 
+.close-modal:hover {
+    background-color: var(--color-primary-hover);
+    transform: scale(1.05);
+    box-shadow: var(--shadow-hover);
+}
+
 .contador-coleccion {
     background-color: #333;
-    color: white;
+    color: var(--color-white);
     padding: 5px 10px;
-    border-radius: 20px;
+    border-radius: var(--border-radius-btn);
     font-size: 14px;
     margin-bottom: 10px;
     text-align: center;
@@ -210,38 +256,40 @@ h1 {
 
 .filtro-input {
     padding: 8px 12px;
-    border-radius: 20px;
-    border: 1px solid #ddd;
+    border-radius: var(--border-radius-btn);
+    border: 1px solid var(--color-border);
     font-size: 14px;
     min-width: 200px;
 }
 
 .filtro-select {
     padding: 8px 12px;
-    border-radius: 20px;
-    border: 1px solid #ddd;
+    border-radius: var(--border-radius-btn);
+    border: 1px solid var(--color-border);
     font-size: 14px;
-    background-color: white;
+    background-color: var(--color-white);
     cursor: pointer;
 }
 
 .filtro-boton {
     padding: 8px 15px;
-    border-radius: 20px;
+    border-radius: var(--border-radius-btn);
     border: none;
-    background-color: #e74c3c;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--color-white);
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: var(--transition-default);
 }
 
 .filtro-boton:hover {
-    background-color: #c0392b;
+    background-color: var(--color-primary-hover);
+    transform: scale(1.05);
+    box-shadow: var(--shadow-hover);
 }
 
 .filtro-boton.limpiar {
-    background-color: #777;
+    background-color: var(--color-light-gray);
 }
 
 .filtro-boton.limpiar:hover {
@@ -252,7 +300,22 @@ h1 {
     text-align: center;
     grid-column: 1 / -1;
     padding: 20px;
-    color: #777;
+    color: var(--color-light-gray);
     font-size: 18px;
 }
 
+.musica {
+    padding: 8px 15px;
+    border-radius: var(--border-radius-btn);
+    border: none;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition-default);
+}
+
+.musica:hover{
+    background-color: var(--color-primary-hover);
+    transform: scale(1.05); 
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex</title>
+    <link rel="stylesheet" href="StyleIntercambio.css">
+    <script src="..\shared\js\CodigoMusica.js" defer></script>
+</head>
+
+<body>
+    <h1>INTERCAMBIA TUS CARTAS</h1>
+
+     <div id="intercambioTab" class="tab-container">
+        
+        <!--- Bandeja para la visualizacion de que cartas se cambiara-->
+
+        <div id="bandejaRecibida" class="bandeja-intercambio">
+            <div class="pokemon-grid" id="cartasRecibidas"></div>
+        </div>
+        <!-- Ahora correctamente -->
+        <button onclick="confirmarEntrega()" class="boton-enviar">
+            Intercambiar
+        </button>
+
+        <button id="play" class="musica">REPRODUCIR</button>
+        <section class="contenido">
+            <h2 class="subtitulo">Tus Pokémon disponibles:</h2>
+            <div id="intercambioGrid" class="pokemon-grid"></div>
+        </section>
+    </div> 
+
+    <div id="notificacionPokemon" class="notificacion" style="display:none;">
+        <p id="mensajeNotificacion"></p>
+        <button onclick="cerrarNotificacion()">Aceptar</button>
+    </div>
+
+    <nav class="menuPokedex">
+            <a href="../index.html" class="active" >Coleccion</a>
+            <a href="../gacha/gacha.html" class="active" >Gacha</a>
+            <a href="../intercambiar/Intercarmbiar.html" class="active" >Intercambiar</a>
+    </nav>
+
+    <!--Esto es para el socket-->
+    <script src="https://cdn.ably.io/lib/ably.min-1.js"></script>
+
+    <script src="../shared/js/CodigoIntercambio.js"></script>
+
+      <audio id="audioBox" autoplay loop><!--Si cambiamos esto de autoplay a play la musica se activara y desactivara sin problemas-->
+        <!--Pero si mantenemos el autoplay, con solo darle una vez, la musica se pone en automatico todo el tiempo, indiferente si cambia de pestaña-->
+        <source src="..\shared\music\intercambiarMusic.m4a" type="audio/mpeg">
+        Tu navegador no soporta audio HTML5.
+    </audio>
+</body>
+
