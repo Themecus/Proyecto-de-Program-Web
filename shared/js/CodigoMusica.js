@@ -6,7 +6,7 @@ let isPlaying = false;
 musicBtn.addEventListener("click", function() {
     if (isPlaying) {
         bgMusic.pause();
-        musicBtn.textContent = "REPRODUCIR MUSICA";
+        musicBtn.textContent = "REPRODUCIR";
     } else {
         bgMusic.play();
         musicBtn.textContent = "PAUSAR";

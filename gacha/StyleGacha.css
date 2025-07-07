@@ -1,3 +1,40 @@
+:root {
+  /* Colores */
+  --color-primary: #e74c3c;
+  --color-primary-hover: #c0392b;
+  --color-secondary: #4e4a4a;
+  --color-success: #4caf50;
+  --color-success-hover: #388e3c;
+  --color-error: #ff5252;
+  --color-error-hover: #ff0000;
+  --color-white: white;
+  --color-black: #000000;
+  --color-text-light: #ffffff;
+  --color-bg-dark: #333;
+  --color-rectangle: #4e6086;
+  --color-border: #62a063;
+  --color-selected: #e8f5e9;
+  --color-hover-gray: rgb(161, 159, 159);
+  
+  /* Tamaños */
+  --max-width-container: 500px;
+  --max-width-rectangle: 300px;
+  --pokemon-img-size: 60px;
+  --modal-img-size: 120px;
+  --border-radius: 8px;
+  --border-radius-btn: 5px;
+  --border-radius-circle: 20px;
+  --border-radius-modal: 10px;
+  
+  /* Sombras */
+  --shadow-default: 0 5px 15px rgba(0,0,0,0.2);
+  --shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.2);
+  --shadow-card: 0 5px 10px rgba(0,0,0,0.1);
+  
+  /* Transiciones */
+  --transition-default: all 0.3s;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -7,12 +44,12 @@
 body {
     font-family: Arial, sans-serif;
     padding: 10px;
-    background: #4e4a4a;
+    background: var(--color-secondary);
 }
 
 .contenido {
     width: 100%;
-    max-width: 500px;
+    max-width: var(--max-width-container);
     margin: 0 auto;
     padding: 20px;
     box-sizing: border-box;
@@ -24,17 +61,17 @@ body {
 
 .rectangulo {
     width: 90%;
-    max-width: 300px;
+    max-width: var(--max-width-rectangle);
     height: 150px;
-    background-color: #4e6086;
-    border: 2px solid #62a063;
-    border-radius: 8px;
+    background-color: var(--color-rectangle);
+    border: 2px solid var(--color-border);
+    border-radius: var(--border-radius);
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: var(--transition-default);
     background-image: url('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png');
     background-size: 80px;
     background-position: center;
@@ -43,12 +80,12 @@ body {
 
 .rectangulo:hover {
     transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    box-shadow: var(--shadow-default);
 }
 
 .texto-dentro {
     font-size: 18px;
-    color: #000000;
+    color: var(--color-black);
     text-align: center;
     padding: 10px;
     font-weight: bold;
@@ -56,17 +93,17 @@ body {
 
 .texto-debajo {
     font-size: 16px;
-    color: #ffffff;
+    color: var(--color-text-light);
     text-align: center;
     width: 90%;
-    max-width: 300px;
+    max-width: var(--max-width-rectangle);
     margin-bottom: 20px;
 }
 
 h1 {
     text-align: center;
     margin: 20px 0;
-    color: #e74c3c;
+    color: var(--color-primary);
 }
 
 .modal {
@@ -83,31 +120,31 @@ h1 {
 }
 
 .modal-content {
-    background-color: white;
+    background-color: var(--color-white);
     padding: 20px;
-    border-radius: 10px;
+    border-radius: var(--border-radius-modal);
     text-align: center;
-    max-width: 300px;
+    max-width: var(--max-width-rectangle);
     width: 90%;
 }
 
 .modal img {
-    width: 120px;
-    height: 120px;
+    width: var(--modal-img-size);
+    height: var(--modal-img-size);
     margin: 10px 0;
 }
 
 .modal h2 {
-    color: #e74c3c;
+    color: var(--color-primary);
     margin-bottom: 10px;
 }
 
 .modal button {
-    background-color: #e74c3c;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--color-white);
     border: none;
     padding: 8px 16px;
-    border-radius: 5px;
+    border-radius: var(--border-radius-btn);
     margin-top: 15px;
     cursor: pointer;
 }
@@ -125,23 +162,22 @@ h1 {
 }
 
 .menuPokedex a {
-    color: #e74c3c;
+    color: var(--color-primary);
     text-decoration: none;
     font-weight: bold;
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: var(--border-radius-btn);
 }
 
 .menuPokedex a.active {
-    background-color: #e74c3c;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--color-white);
 }
 
 .menuPokedex a.active:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-hover);
 }
-
 
 .botones-contenedor {
     display: flex;
@@ -152,44 +188,44 @@ h1 {
 }
 
 .boton-reset {
-    background-color: #ff5252;
-    color: white;
+    background-color: var(--color-error);
+    color: var(--color-white);
     border: none;
     padding: 8px 16px;
-    border-radius: 5px;
+    border-radius: var(--border-radius-btn);
     cursor: pointer;
     font-weight: bold;
-    transition: background-color 0.3s;
+    transition: var(--transition-default);
 }
 
 .boton-reset:hover {
-    background-color: #ff0000;
+    background-color: var(--color-error-hover);
     transform: scale(1.05); 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    box-shadow: var(--shadow-hover); 
 }
 
 .boton-completar {
-    background-color: #4caf50;
-    color: white;
+    background-color: var(--color-success);
+    color: var(--color-white);
     border: none;
     padding: 8px 16px;
-    border-radius: 5px;
+    border-radius: var(--border-radius-btn);
     cursor: pointer;
     font-weight: bold;
-    transition: background-color 0.3s;
+    transition: var(--transition-default);
 }
 
 .boton-completar:hover {
-    background-color: #388e3c;
+    background-color: var(--color-success-hover);
     transform: scale(1.05); 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    box-shadow: var(--shadow-hover); 
 }
 
 .contador-coleccion {
-    background-color: #333;
-    color: white;
+    background-color: var(--color-bg-dark);
+    color: var(--color-white);
     padding: 5px 10px;
-    border-radius: 20px;
+    border-radius: var(--border-radius-circle);
     font-size: 14px;
     margin-bottom: 10px;
 }
@@ -204,14 +240,14 @@ h1 {
 }
 
 .pokemon-seleccion {
-    background-color: white;
-    border-radius: 8px;
+    background-color: var(--color-white);
+    border-radius: var(--border-radius);
     padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: var(--transition-default);
     border: 2px solid transparent;
     animation: moviento-desbloqueo 2s ease;
 }
@@ -235,18 +271,18 @@ h1 {
 
 .pokemon-seleccion:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-    background-color: rgb(161, 159, 159);
+    box-shadow: var(--shadow-card);
+    background-color: var(--color-hover-gray);
 }
 
 .pokemon-seleccion.seleccionado {
-    border-color: #4caf50;
-    background-color: #e8f5e9;
+    border-color: var(--color-success);
+    background-color: var(--color-selected);
 }
 
 .pokemon-seleccion img {
-    width: 60px;
-    height: 60px;
+    width: var(--pokemon-img-size);
+    height: var(--pokemon-img-size);
 }
 
 .pokemon-seleccion p {
@@ -261,22 +297,21 @@ h1 {
     text-align: center;
     margin-bottom: 15px;
     font-weight: bold;
-    color: #e74c3c;
+    color: var(--color-primary);
 }
 
 .musica {
     padding: 8px 15px;
-    border-radius: 20px;
+    border-radius: var(--border-radius-circle);
     border: none;
-    background-color: #e74c3c;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--color-white);
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: var(--transition-default);
 }
 
 .musica:hover{
-    background-color: #c0392b;
+    background-color: var(--color-primary-hover);
     transform: scale(1.05); 
-
 }
