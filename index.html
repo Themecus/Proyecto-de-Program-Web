@@ -6,6 +6,7 @@
     <title>Pokédex</title>
     <link rel="stylesheet" href="shared\css\StyleColeccion.css">
     <script src="shared\js\CodigoColeccion.js" defer></script>
+    <script src="shared\js\CodigoMusica.js" defer></script>
 </head>
 
 
@@ -42,6 +43,7 @@
         </select>
         <button id="aplicarFiltros" class="filtro-boton">Filtrar</button>
         <button id="limpiarFiltros" class="filtro-boton limpiar">Limpiar</button>
+        <button id="play" class="musica">REPRODUCIR MUSICA</button>
     </section>
     
     <section class="pokemon-grid" id="coleccionGrid"><!--aqui apareceran los 150 casillas para los pokemones-->
@@ -79,5 +81,11 @@
         <a href="gacha\gacha.html" class="active">Gacha</a>
         <a href="intercambiar\Intercarmbiar.html" class="active">Intercarmbiar</a>
     </nav>
+
+    <audio id="audioBox" autoplay loop><!--Si cambiamos esto de autoplay a play la musica se activara y desactivara sin problemas-->
+        <!--Pero si mantenemos el autoplay, con solo darle una vez, la musica se pone en automatico todo el tiempo, indiferente si cambia de pestaña-->
+        <source src="shared\music\coleccionMusic.m4a" type="audio/mpeg">
+        Tu navegador no soporta audio HTML5.
+    </audio>
 </body>
 </html>
