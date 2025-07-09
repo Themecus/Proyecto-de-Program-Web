@@ -241,13 +241,7 @@ function aplicarFiltros() {
 
 //limpia y solo muestra la lista sin filtros
 function limpiarFiltros() {
-    document.getElementById('filtroNombre').value = '';
-    document.getElementById('filtroTipo').value = '';
     
-    // Mostrar solo los Pokémon obtenidos
-    const pokemonObtenidos = todosLosPokemon.filter(pokemon => 
-        coleccionPokemon[pokemon.id-1] !== null
-    );
-    
-    renderizarPokemonGrid(pokemonObtenidos);
+    // Refrescar la página después de limpiar los filtros
+    location.reload();
 }
