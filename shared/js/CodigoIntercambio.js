@@ -82,53 +82,6 @@ function mostrarCartasDesbloqueadas() {
   });
 }
 
-
-/*function confirmarEntrega() {
-  if (cartasSeleccionadas.length === 0 || propuestaRecibida.length === 0) {
-    alert('Asegúrate de que ambos jugadores hayan seleccionado cartas.');
-    return;
-  }
-
-  // 📦 1. Verificar si tú recibes duplicadas
-  const duplicadasRecibidas = propuestaRecibida.filter(id => {
-    const yaTengo = coleccionPokemon[id - 1];
-    return yaTengo !== null;
-  });
-
-  // 📦 2. Verificar si el otro usuario recibiría duplicadas (usando colección simulada)
-  // Simulamos lo que el otro recibiría si su colección fuera como la tuya
-  const duplicadasQueEnvias = cartasSeleccionadas.filter(id => {
-    const yaTengo = coleccionPokemon[id - 1];
-    return yaTengo !== null; // Suponemos que lo que tú tienes, él podría tener
-  });
-
-  const duplicadasTotales = [...duplicadasRecibidas, ...duplicadasQueEnvias];
-
-  if (duplicadasRecibidas.length > 0 || duplicadasQueEnvias.length > 0) {
-    let mensaje = '🚫 Intercambio cancelado:\n';
-
-    if (duplicadasRecibidas.length > 0) {
-      mensaje += `- Vas a recibir cartas que ya tienes (#${duplicadasRecibidas.join(', ')})\n`;
-    }
-
-    if (duplicadasQueEnvias.length > 0) {
-      mensaje += `- Estás enviando cartas que el otro jugador ya podría tener (#${duplicadasQueEnvias.join(', ')})`;
-    }
-
-    alert(mensaje);
-    return;
-  }
-
-  // ✅ Si no hay duplicados, procedemos
-  canal.publish('intercambio-confirmado', {
-    from: userId,
-    enviar: cartasSeleccionadas,
-    recibir: propuestaRecibida
-  });
-
-  alert('¡Intercambio enviado!');
-}*/
-
 function confirmarEntrega() {
   if (cartasSeleccionadas.length === 0 || propuestaRecibida.length === 0) {
     mostrarNotificacion('Asegúrate de que ambos jugadores hayan seleccionado cartas.');
@@ -218,9 +171,6 @@ canal.subscribe('intercambio-confirmado', mensaje => {
     mostrarNotificacion('¡No recibiste cartas nuevas, pero se refrescó la colección!');
   }
 });
-
-
-
 
 canal.subscribe('propuesta-intercambio', mensaje => {
   if (mensaje.data.from === userId) return;
