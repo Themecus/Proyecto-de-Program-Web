@@ -177,7 +177,7 @@ function mostrarSeleccionPokemon() {
             seleccionarPokemon(pokemon);
         });
         
-        seleccionContainer.appendChild(pokemonElement);//Explicame esto
+        seleccionContainer.appendChild(pokemonElement);
     });
 }
 
